@@ -1,0 +1,141 @@
+{% load static %}
+{% load bootstrap4 %}
+{% load socialaccount %}
+
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
+
+    <head>
+        <title>Carpool</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    </head>
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+    {% bootstrap_messages %}
+
+    <body>
+        <div class="w3-sidebar w3-light-gray w3-bar-block w3-card w3-animate-left" style="display:none" id="mySidebar">
+            <button onclick = "w3_close()" class="w3-bar-item w3-large">Close &times;</button>
+            <!-- <h3 class="w3-bar-item">Menu</h3> -->
+            <div class= "w3-dropdown-hover">
+                <button id = studAccButton class = "w3-button" onclick= "studAccOpenFunc()">
+                    Student 
+                    <div id = "openButton" class = "w3-right w3-hide w3-show">
+                        {% include './icons/bootstrap-icons-1.1.0/caret-down-fill.svg' %}  
+                    </div>
+                    <div id = "closeButton" class = "w3-right w3-hide">
+                        {% include './icons/bootstrap-icons-1.1.0/caret-up-fill.svg' %}  
+                    </div>
+                </button>
+                <div id= "studAccList" class = "w3-hide w3-white w3-card">
+                    <a href="{% url 'student_list' %}" class="w3-bar-item w3-button">Student List</a>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'student_new' %}" class= "w3-bar-item w3-button">New Student</a>
+                    {% endif %}
+                </div>
+            </div> 
+            <a href="{% url 'student_list' %}" class="w3-bar-item w3-button">Student List</a>
+            <a href="{% url 'car_list' %}" class="w3-bar-item w3-button">Car List</a>
+            <a href="{% url 'room_list' %}" class="w3-bar-item w3-button">Room List</a>
+        </div>
+          <!-- Page Content -->
+         <!-- <div style="margin-left:10%"> -->
+        <div id = "main">
+            <header class="page-header">
+                <div class="w3-sidebar w3-bar-block w3-card w3-animate-left" style="display:none" id="mySidebar">
+                    <button class="w3-button w3-blue w3-xlarge" onclick="w3_open()">☰</button> 
+                </div>
+            </header>
+            <div class= "w3-blue">
+                <button id="openNav" class="w3-button w3-blue w3-xlarge" onclick="w3_open()">&#9776;</button>
+                <div class="w3-container w3-center">
+                    <h1>Carpool</h1>
+                <!-- <div class="w3-container"> -->
+                    <!-- <h1 class ="site-title"><a href="/">Carpool</a></h1> -->
+                    {% if user.is_authenticated %}
+                        Hello, {{ user.username }}
+                    {% else %}
+                        <b href="{% provider_login_url 'google' %}">Login with Google</b>
+                    {% endif %}
+                 <!-- </div> -->
+                </div>
+            </div>
+            <br>
+            <main class="content container">
+                <div class="row">
+                    <div class = 'col'>
+                        {% block content %}
+                        {% endblock %}
+                    </div>
+                </div>
+            </main>
+        </div>
+    </body>
+    <script>
+        function w3_open() {
+            document.getElementById("main").style.marginLeft = "30%";
+            document.getElementById("mySidebar").style.width = "30%";
+            document.getElementById("mySidebar").style.display = "block";
+            document.getElementById("openNav").style.display = 'none';
+        }
+        
+        function w3_close() {
+            document.getElementById("main").style.marginLeft = "0%";
+            document.getElementById("mySidebar").style.display = "none";
+            document.getElementById("openNav").style.display = "inline-block";
+        }
+        function studAccOpenFunc() {
+            var x = document.getElementById("studAccList");
+            var y = document.getElementById("openButton");
+            var z = document.getElementById("closeButton");
+            if (x.className.indexOf("w3-show") == -1) {
+                x.className += " w3-show";
+                x.previousElementSibling.className += " w3-light-blue w3-hover-light-blue";
+
+            } else { 
+                 x.className = x.className.replace(" w3-show", "");
+                 x.previousElementSibling.className = x.previousElementSibling.className.replace(" w3-light-blue w3-hover-light-blue", "");
+            }
+            if (y.className.indexOf("w3-show") == -1) {
+                y.className += " w3-show";
+            } else {
+                y.className = y.className.replace(" w3-show", "");
+            }
+            if (z.className.indexOf("w3-show") == -1) {
+                z.className += " w3-show";
+            } else {
+                z.className = z.className.replace(" w3-show", "");
+            }
+            
+        }
+    </script> 
+    <style>
+            b:link {
+                color: white; 
+                background-color: transparent; 
+                text-decoration: underline;
+            }
+            
+            b:visited {
+                color: pink;
+                background-color: transparent;
+                text-decoration: none;
+            }
+            
+            b:hover {
+                color: lightskyblue;
+                background-color: transparent;
+                text-decoration: underline;
+            }
+    
+            b:active {
+                color: yellow;
+                background-color: transparent;
+                text-decoration: underline;
+            }
+        </style>
+</html>

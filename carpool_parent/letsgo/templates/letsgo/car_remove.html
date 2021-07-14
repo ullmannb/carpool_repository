@@ -1,0 +1,12 @@
+<div class="main">
+    <form method="POST">
+        {% csrf_token %}
+        {% if user.is_authenticated %}
+            Are you sure you want to delete this car?
+            <input type="submit" value="Yes" />
+            <a href="/car/list/">Cancel</a>
+        {% else %} 
+            You are not authorized to delete this
+        {% endif %}
+    </form>
+</div>

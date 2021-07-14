@@ -1,0 +1,29 @@
+{% extends 'letsgo/base.html' %}
+
+{% block content %}
+    <article class="room">
+        <!-- {% if room.published_date %}
+            <time class="date">
+                {{ room.published_date }}
+            </time>
+        {% endif %}  -->
+        <aside class="actions">
+            {% if user.is_authenticated %}
+                <p>
+                    Edit this room's info:
+                    <a class="btn btn-default" href="{% url 'room_edit' pk=room.pk %}">
+                        {% include './icons/pencil-fill.svg' %}
+                    </a>
+                </p>
+                <p>
+                    Delete this room:
+                    <a class="btn btn-default" href="{% url 'room_remove' pk=room.pk %}">
+                        {% include './icons/bootstrap-icons-1.1.0/scissors.svg' %}
+                    </a>
+                </p>
+            {% endif %} 
+        </aside>
+        <h2>{{ room.location }}</h2>
+        <p>{{ room.teacher|linebreaksbr }}</p>
+    </article>
+{% endblock %}

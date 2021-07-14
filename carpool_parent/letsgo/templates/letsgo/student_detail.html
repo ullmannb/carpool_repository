@@ -1,0 +1,30 @@
+{% extends 'letsgo/base.html' %}
+
+{% block content %}
+    <article class="student">
+        <aside class="actions">
+            {% if user.is_authenticated %}
+                <p>
+                    Edit {{student.student_name}}'s info:
+                    <a class="btn btn-default" href="{% url 'student_edit' pk=student.pk %}">
+                        {% include './icons/pencil-fill.svg' %}
+                    </a>
+                </p>
+                <p>
+                    Delete this student:
+                    <a class="btn btn-default" href="{% url 'student_remove' pk=student.pk %}">
+                        {% include './icons/bootstrap-icons-1.1.0/scissors.svg' %}
+                    </a>
+                </p>
+            {% endif %} 
+        </aside>
+        <h2>{{ student.student_name }}</h2>
+        <p>
+            {{student.student_name}}'s grade:
+            {{student.grade}}
+            <br>
+            {{student.student_name}}'s room:
+            {{student.student_room.location}}
+        </p>
+    </article>
+{% endblock %}

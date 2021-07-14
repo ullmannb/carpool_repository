@@ -1,0 +1,34 @@
+{% extends 'letsgo/base.html' %}
+{% block content %}
+<head>
+    <h3>Car List</h3>
+    {% if user.is_authenticated %}
+    <p>
+        Add a new car:
+        <a href="{% url 'car_new' %}" class="top-menu">
+            {% include './icons/file-earmark-plus.svg' %}
+        </a>
+    </p>
+{% endif %}
+</head>
+<ul>
+{% for car in car_with_student_list %} 
+<li>
+    <a href="{% url 'car_detail' pk=car.pk%}">
+        {{car}}
+    </a>
+    <ul>
+        {% for student in students %} 
+            {% if student.student_car == car %} 
+                <li>
+                    <a href="{% url 'student_detail' pk=student.pk%}">
+                        {{student.student_name}}
+                    </a>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</li>
+{% endfor %}
+</ul>
+{% endblock %} 

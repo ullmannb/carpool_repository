@@ -1,0 +1,25 @@
+{% extends 'letsgo/base.html' %}
+{% block content %}
+<head>
+    <h3>Room List </h3>
+        {% if user.is_authenticated %}
+            <p>
+                Add a new room:
+                <a href="{% url 'room_new' %}" class="top-menu">
+                    {% include './icons/file-earmark-plus.svg' %}
+                </a>
+            </p>
+        {% endif %}
+</head>
+    <ul>
+        {% for room in rooms %}
+        <li>
+            <a href="{% url 'room_detail' pk=room.pk%}">
+                {{room.location}}{% if room.teacher %},
+                    {{room.teacher}} 
+                {% endif %}
+            </a>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}

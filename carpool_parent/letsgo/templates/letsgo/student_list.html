@@ -1,0 +1,43 @@
+{% extends 'letsgo/base.html' %}
+{% block content %}
+
+<head>
+    <h3>Student List</h3>
+        {% if user.is_authenticated %}
+            <p>
+                Add a new student:
+                <a href="{% url 'student_new' %}" class="top-menu">
+                    {% include './icons/file-earmark-plus.svg' %}
+                </a>
+            </p>
+        {% endif %}
+</head>
+    <ul>
+    {% for room in room_with_student_list %} 
+        <li>
+            <a href="{% url 'room_detail' pk=room.pk%}">
+                {{room.location}}{% if room.teacher %},
+                    {{room.teacher}}
+                {% endif %} 
+            </a>
+            <ul>
+                {% for student in students %} 
+                    {% if student.student_room == room %} 
+                        <li>
+                            <a href="{% url 'student_detail' pk=student.pk%}">
+                                {{student.student_name}}
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %} 
+
+
+
+
+        
+    
